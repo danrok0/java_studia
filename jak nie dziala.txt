@@ -1,0 +1,3 @@
+zmienić nazwę na oficjalną stock-market-sim
+sprawdzić wersje jdk itd
+pobrać te rzeczy z ma...
