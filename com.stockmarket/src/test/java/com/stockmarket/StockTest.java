@@ -34,4 +34,31 @@ public class StockTest {
         assertThrows(IllegalArgumentException.class, () -> new Stock("SYM", "", 10));
         assertThrows(IllegalArgumentException.class, () -> new Stock("SYM", "Name", 0));
     }
+    @Test
+    void testSymbolAndNameTrimming() {
+        Stock s = new Stock("  CDR  ", "  CD Projekt  ", 100.0);
+        assertEquals("  CDR  ", s.getSymbol());
+        assertEquals("  CD Projekt  ", s.getName());
+    }
+
+    @Test
+    void testEqualsItself() {
+        Stock stock = new Stock("TEN", "Ten Square Games", 100);
+        assertEquals(stock, stock);
+    }
+
+    @Test
+    void testHashCodeConsistency() {
+        Stock s1 = new Stock("ABC", "Company ABC", 10.0);
+        int hash1 = s1.hashCode();
+        int hash2 = s1.hashCode();
+        assertEquals(hash1, hash2);
+    }
+
+    @Test
+    void testEqualsWithNullAndOtherType() {
+        Stock s1 = new Stock("QWE", "Test Name", 12.1);
+        assertNotEquals(null, s1);
+        assertNotEquals(s1, "QWE");
+    }
 }
