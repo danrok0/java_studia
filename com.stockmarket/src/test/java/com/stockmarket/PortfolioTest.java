@@ -68,4 +68,34 @@ public class PortfolioTest {
         assertThrows(IllegalArgumentException.class, () -> portfolio.addStock(null, 1));
         assertThrows(IllegalArgumentException.class, () -> portfolio.addStock(cdr, 0));
     }
+     @Test
+    void testInitialCashNegativeThrowsException() {
+        assertThrows(IllegalArgumentException.class, () -> new Portfolio(-1.0));
+    }
+
+    @Test
+    void testGetStockQuantityNotPresent() {
+        assertEquals(0, portfolio.getStockQuantity(new Stock("ZZZ", "Not Present", 10.0)));
+    }
+
+    @Test
+    void testAddStockNullStockThrowsException() {
+        assertThrows(IllegalArgumentException.class, () -> portfolio.addStock(null, 5));
+    }
+
+    @Test
+    void testPortfolioIsFullEdgeCase() {
+        for (int i = 0; i < 10; i++) {
+            portfolio.addStock(new Stock("SYM" + i, "Company" + i, 10.0), 1);
+        }
+        // The portfolio should be full
+        assertEquals(10, portfolio.getHoldingsCount());
+    }
+
+    @Test
+    void testCalculateStockValueNoStocks() {
+        Portfolio emptyPortfolio = new Portfolio(200.0);
+        assertEquals(0.0, emptyPortfolio.calculateStockValue());
+        assertEquals(200.0, emptyPortfolio.calculateTotalValue());
+    }
 }
